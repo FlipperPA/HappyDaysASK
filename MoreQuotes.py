@@ -27,5 +27,5 @@
 "Stop being afraid of what could go wrong and think of what could go write",
 "Tough times never last, but tough people do...Robert H. Shuller",
 "You cannot stop the waves but you can learn to surf!...Jon Kabat-Zinn",
-"People who are crazy enough to think they change change the world, are the ones that do...Steve Jobs"
-
+"People who are crazy enough to think they change change the world, are the ones that do...Steve Jobs",
+"There is an art to flying, or rather a knack. The knack lies in learning how to throw yourself at the ground and miss... Douglas Adams",

@@ -2,12 +2,12 @@ from __future__ import print_function
 import random
 
 quotes = [
-    "You have brains in your head you have feet in your shoes you can steer yourself in any direction you choose... Doctor Seuss", 
-    "Doing what you like is freedom. Liking what you do is happiness... Frank Tyger", 
-    "Be happy with what you have. Be excited about what you want... Alan Cohen", 
+    "You have brains in your head you have feet in your shoes you can steer yourself in any direction you choose... Doctor Seuss",
+    "Doing what you like is freedom. Liking what you do is happiness... Frank Tyger",
+    "Be happy with what you have. Be excited about what you want... Alan Cohen",
     "Don't worry about a thing, 'cause every little thing gonna be alright... Bob Marley",
-    "Life is a journey, and if you fall in love with the journey, you will be in love forever... Peter Hagerty", 
-    "You're off to great places! Today is your day! Your mountain is waiting so get on your way... Doctor Seuss", 
+    "Life is a journey, and if you fall in love with the journey, you will be in love forever... Peter Hagerty",
+    "You're off to great places! Today is your day! Your mountain is waiting so get on your way... Doctor Seuss",
     "If you can dream it. You can do it... Walt Disney",
     "Once you choose hope, anything's possible... Christopher Reeve",
     "Do one thing every day that scares you... Eleanor Roosevelt",
@@ -70,10 +70,9 @@ quotes = [
     "When something is important enough, you do it even if the odds are not in your favor...Elon Musk",
     "Well done is better than well said... Benjamin Franklin",
     "The most effective way to do it, is to do it ...Amelia Earhart",
-    "",
-    "",
-    "",
-    ]
+    "There is an art to flying, or rather a knack. The knack lies in learning how to throw yourself at the ground and miss... Douglas Adams",
+]
+
 
 def lambda_handler(event, context):
     print("event.session.application.applicationId=" +
@@ -90,15 +89,18 @@ def lambda_handler(event, context):
     elif event['request']['type'] == "SessionEndedRequest":
         return on_session_ended(event['request'], event['session'])
 
+
 def on_session_started(session_started_request, session):
     print("on_session_started requestId=" +
           session_started_request['requestId'] + ", sessionId=" +
           session['sessionId'])
 
+
 def on_launch(launch_request, session):
     print("on_launch requestId=" + launch_request['requestId'] +
           ", sessionId=" + session['sessionId'])
     return get_welcome_response()
+
 
 def on_intent(intent_request, session):
     print("on_intent requestId=" + intent_request['requestId'] +
@@ -122,14 +124,22 @@ def on_intent(intent_request, session):
         return handle_finish_session_request(intent, session)
     else:
         return handle_finish_session_request(intent, session)
-        
+
+
 def get_welcome_response():
     session_attributes = {}
     random_number = random.randint(0, len(quotes))
     speech_output = "Here's a dose of happiness..." + quotes[random_number] + "... Would you like to hear another quote?"
     reprompt_text = "Would you like to hear another quote?"
     should_end_session = False
-    return build_response(session_attributes, build_speechlet_response_without_card(speech_output, reprompt_text, should_end_session))
+    return build_response(
+        session_attributes,
+        build_speechlet_response_without_card(
+            speech_output,
+            reprompt_text,
+            should_end_session
+        )
+    )
 
 
 def on_session_ended(session_ended_request, session):
@@ -143,21 +153,44 @@ def handle_anotherq_request(intent, session):
         speech_output = "Here's another quote!" + quotes[random_number] + "... Would you like to hear another quote?"
         reprompt_text = "Would you like to hear another quote?"
         should_end_session = False
-        return build_response(attributes, build_speechlet_response_without_card(speech_output, reprompt_text, should_end_session))
+        return build_response(
+            attributes,
+            build_speechlet_response_without_card(
+                speech_output,
+                reprompt_text,
+                should_end_session
+            )
+        )
+
 
 def handle_help_request(intent, session):
     attributes = {}
     speech_output = "(You can ask me for a positive quote by saying give me a quote, or, you can say exit... What can I help you with?)"
     reprompt_text = "So, how can I help you?"
     should_end_session = False
-    return build_response(attributes, build_speechlet_response_without_card(speech_output, reprompt_text, should_end_session))
+    return build_response(
+        attributes,
+        build_speechlet_response_without_card(
+            speech_output,
+            reprompt_text,
+            should_end_session
+        )
+    )
+
 
 def handle_finish_session_request(intent, session):
     attributes = {}
     reprompt_text = None
     speech_output = "Ok! Have a happy day!"
     should_end_session = True
-    return build_response(attributes, build_speechlet_response_without_card(speech_output, reprompt_text, should_end_session))
+    return build_response(
+        attributes,
+        build_speechlet_response_without_card(
+            speech_output,
+            reprompt_text,
+            should_end_session
+        )
+    )
 
 
 def build_speechlet_response(title, output, reprompt_text, should_end_session):
